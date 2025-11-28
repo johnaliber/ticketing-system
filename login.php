@@ -39,150 +39,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="color-scheme" content="light dark">
     <style>
         :root {
-            --bg: #0b1220;
-            --card: #ffffff;
-            --text: #0f172a;
-            --muted: #475569;
-            --primary: #2563eb;
-            --primary-600: #1d4ed8;
-            --ring: rgba(37, 99, 235, 0.35);
+            --bg: #0b1220; --card: #ffffff; --text: #0f172a; --muted: #475569;
+            --primary: #2563eb; --primary-600: #1d4ed8; --ring: rgba(37, 99, 235, 0.35);
             --danger: #dc2626;
         }
         @media (prefers-color-scheme: dark) {
-            :root {
-                --card: #111827;
-                --text: #e5e7eb;
-                --muted: #94a3b8;
-                --ring: rgba(59, 130, 246, 0.45);
-            }
+            :root { --card: #111827; --text: #e5e7eb; --muted: #94a3b8; --ring: rgba(59,130,246,.45); }
         }
-        * { box-sizing: border-box; }
-        html, body { height: 100%; }
-        body {
-            margin: 0;
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        * { box-sizing: border-box; } html, body { height: 100%; }
+        body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans";
             color: var(--text);
-            background:
-                radial-gradient(800px 400px at 10% 10%, rgba(37,99,235,.15), transparent 40%),
-                radial-gradient(800px 400px at 90% 90%, rgba(99,102,241,.12), transparent 40%),
-                var(--bg);
-            display: grid;
-            place-items: center;
-            padding: 24px;
-        }
-        .card {
-            width: 100%;
-            max-width: 420px;
-            background: var(--card);
-            border-radius: 14px;
-            box-shadow:
-                0 15px 35px rgba(0,0,0,.15),
-                0 2px 8px rgba(0,0,0,.08);
-            overflow: hidden;
-            border: 1px solid rgba(148,163,184,.15);
-        }
-        .header {
-            padding: 28px 28px 14px 28px;
-            display: grid;
-            gap: 10px;
-            justify-items: center;
-            text-align: center;
-        }
-        .brand {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
+            background: radial-gradient(800px 400px at 10% 10%, rgba(37,99,235,.15), transparent 40%),
+                        radial-gradient(800px 400px at 90% 90%, rgba(99,102,241,.12), transparent 40%), var(--bg);
+            display: grid; place-items: center; padding: 24px; }
+        .card { width: 100%; max-width: 420px; background: var(--card); border-radius: 14px;
+            box-shadow: 0 15px 35px rgba(0,0,0,.15), 0 2px 8px rgba(0,0,0,.08);
+            overflow: hidden; border: 1px solid rgba(148,163,184,.15); }
+        .header { padding: 28px 28px 14px; display: grid; gap: 10px; justify-items: center; text-align: center; }
+        .brand { width: 56px; height: 56px; border-radius: 14px;
             background: conic-gradient(from 180deg at 50% 50%, #1d4ed8, #22d3ee, #a78bfa, #1d4ed8);
-            display: grid;
-            place-items: center;
-            box-shadow: 0 10px 20px rgba(37,99,235,.25);
-        }
-        .brand svg {
-            width: 30px; height: 30px;
-            color: #ffffff;
-            filter: drop-shadow(0 1px 1px rgba(0,0,0,.25));
-        }
+            display: grid; place-items: center; box-shadow: 0 10px 20px rgba(37,99,235,.25); }
+        .brand svg { width: 30px; height: 30px; color: #fff; filter: drop-shadow(0 1px 1px rgba(0,0,0,.25)); }
         .title { font-size: 20px; font-weight: 700; letter-spacing: .2px; }
         .subtitle { font-size: 13px; color: var(--muted); }
-        .body { padding: 18px 28px 28px 28px; }
-        .alert {
-            display: <?php echo $error ? 'block' : 'none'; ?>;
-            background: rgba(220,38,38,.08);
-            border: 1px solid rgba(220,38,38,.35);
-            color: var(--danger);
-            padding: 10px 12px;
-            border-radius: 10px;
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
+        .body { padding: 18px 28px 28px; }
+        .alert { display: none; background: rgba(220,38,38,.08); border: 1px solid rgba(220,38,38,.35);
+            color: var(--danger); padding: 10px 12px; border-radius: 10px; font-size: 13px; margin-bottom: 12px; }
+        .alert.show { display: block; }
         .field { margin-bottom: 14px; }
-        .label {
-            display: block;
-            font-size: 12px;
-            color: var(--muted);
-            margin-bottom: 6px;
-        }
-        .input-wrap {
-            position: relative;
-        }
-        .input {
-            width: 100%;
-            height: 44px;
-            padding: 10px 40px 10px 42px;
-            border-radius: 10px;
-            border: 1px solid rgba(148,163,184,.35);
-            background: transparent;
-            color: var(--text);
-            outline: none;
-            transition: box-shadow .2s, border-color .2s;
-        }
-        .input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--ring);
-        }
-        .icon-left, .icon-right {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--muted);
-        }
-        .icon-left { left: 12px; }
-        .icon-right { right: 10px; cursor: pointer; }
-        .row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            margin: 6px 0 18px 0;
-            font-size: 13px;
-        }
-        .row a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-        .btn {
-            width: 100%;
-            height: 44px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(180deg, var(--primary), var(--primary-600));
-            color: #fff;
-            font-weight: 600;
-            letter-spacing: .3px;
-            cursor: pointer;
-            box-shadow: 0 8px 18px rgba(37,99,235,.35);
-            transition: transform .05s ease, box-shadow .2s ease, filter .2s ease;
-        }
-        .btn:active {
-            transform: translateY(1px);
-            box-shadow: 0 5px 12px rgba(37,99,235,.35);
-        }
-        .footer-note {
-            margin-top: 14px;
-            text-align: center;
-            font-size: 12px;
-            color: var(--muted);
-        }
+        .label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+        .input-wrap { position: relative; }
+        .input { width: 100%; height: 44px; padding: 10px 40px 10px 42px; border-radius: 10px;
+            border: 1px solid rgba(148,163,184,.35); background: transparent; color: var(--text);
+            outline: none; transition: box-shadow .2s, border-color .2s; }
+        .input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--ring); }
+        .icon-left, .icon-right { position: absolute; top: 50%; transform: translateY(-50%); color: var(--muted); }
+        .icon-left { left: 12px; } .icon-right { right: 10px; cursor: pointer; }
+        .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 6px 0 18px; font-size: 13px; }
+        .row a { color: var(--primary); text-decoration: none; }
+        .btn { width: 100%; height: 44px; border: none; border-radius: 10px;
+            background: linear-gradient(180deg, var(--primary), var(--primary-600)); color: #fff; font-weight: 600;
+            letter-spacing: .3px; cursor: pointer; box-shadow: 0 8px 18px rgba(37,99,235,.35);
+            transition: transform .05s ease, box-shadow .2s ease, filter .2s ease; }
+        .btn:active { transform: translateY(1px); box-shadow: 0 5px 12px rgba(37,99,235,.35); }
+        .footer-note { margin-top: 14px; text-align: center; font-size: 12px; color: var(--muted); }
     </style>
 </head>
 <body>
@@ -202,36 +102,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="subtitle">Sign in to manage and track support tickets</div>
         </div>
         <div class="body">
-            <div class="alert" role="alert" aria-live="polite">
-                <?php echo htmlspecialchars($error ?: '', ENT_QUOTES, 'UTF-8'); ?>
-            </div>
-            <form method="post" action="login.php" novalidate>
-                <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($_SESSION['csrf'], ENT_QUOTES, 'UTF-8'); ?>" />
-                
+            <div id="alert" class="alert" role="alert" aria-live="polite"></div>
+            <form id="loginForm" novalidate>
+                <input type="hidden" id="csrf" name="csrf" />
                 <div class="field">
                     <label class="label" for="username">Username</label>
                     <div class="input-wrap">
                         <span class="icon-left" aria-hidden="true">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20 21a8 8 0 1 0-16 0"/>
-                                <circle cx="12" cy="7" r="4"/>
+                                <path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/>
                             </svg>
                         </span>
-                        <input
-                            class="input"
-                            type="text"
-                            id="username"
-                            name="username"
-                            inputmode="text"
-                            autocomplete="username"
-                            placeholder="e.g. jdoe"
-                            value="<?php echo htmlspecialchars($_POST['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
-                            required
-                            aria-required="true"
-                        />
+                        <input class="input" type="text" id="username" name="username" autocomplete="username" placeholder="e.g. jdoe" required />
                     </div>
                 </div>
-
                 <div class="field">
                     <label class="label" for="password">Password</label>
                     <div class="input-wrap">
@@ -241,40 +125,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <path d="M7 11V8a5 5 0 0 1 10 0v3"></path>
                             </svg>
                         </span>
-                        <input
-                            class="input"
-                            type="password"
-                            id="password"
-                            name="password"
-                            autocomplete="current-password"
-                            placeholder="Enter your password"
-                            required
-                            aria-required="true"
-                        />
+                        <input class="input" type="password" id="password" name="password" autocomplete="current-password" placeholder="Enter your password" required />
                         <span class="icon-right" id="togglePwd" title="Show/Hide password" aria-label="Toggle password visibility">
                             <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
-                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>
                             </svg>
                         </span>
                     </div>
                 </div>
-
                 <div class="row">
                     <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-                        <input type="checkbox" name="remember" style="accent-color: var(--primary);" />
-                        Remember me
+                        <input type="checkbox" id="remember" name="remember" style="accent-color: var(--primary);" /> Remember me
                     </label>
                     <a href="#" title="Contact admin to reset">Forgot password?</a>
                 </div>
-
                 <button class="btn" type="submit">Sign In</button>
-                <div class="footer-note">© <?php echo date('Y'); ?> Hotel IT Department</div>
+                <div class="footer-note">© <span id="year"></span> Hotel IT Department</div>
             </form>
         </div>
     </main>
 
     <script>
+        const alertBox = document.getElementById('alert');
+        const csrfInput = document.getElementById('csrf');
+        const form = document.getElementById('loginForm');
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Toggle password visibility
         (function () {
             const pwd = document.getElementById('password');
             const toggle = document.getElementById('togglePwd');
@@ -287,6 +164,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     : '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" /><circle cx="12" cy="12" r="3"/>';
             });
         })();
+
+        function showError(msg) {
+            alertBox.textContent = msg || 'Something went wrong.';
+            alertBox.classList.add('show');
+        }
+        function clearError() {
+            alertBox.textContent = '';
+            alertBox.classList.remove('show');
+        }
+
+        // Get CSRF token from backend
+        async function loadCsrf() {
+            try {
+                const res = await fetch('/api/auth/csrf.php', { credentials: 'include' });
+                const data = await res.json();
+                csrfInput.value = data.csrf || '';
+            } catch {
+                showError('Failed to initialize session. Please refresh.');
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearError();
+            const payload = {
+                username: document.getElementById('username').value.trim(),
+                password: document.getElementById('password').value,
+                remember: document.getElementById('remember').checked,
+                csrf: csrfInput.value
+            };
+            if (!payload.username || !payload.password) {
+                showError('Please enter your username and password.');
+                return;
+            }
+            try {
+                const res = await fetch('/api/auth/login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    window.location.href = '/dashboard.php';
+                } else {
+                    showError(data.error || 'Invalid username or password.');
+                    await loadCsrf(); // refresh token on auth error
+                }
+            } catch {
+                showError('Network error. Please try again.');
+            }
+        });
+
+        loadCsrf();
     </script>
 </body>
 </html>
