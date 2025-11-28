@@ -1,0 +1,32 @@
+{
+  "name": "login-dashboard-project",
+  "version": "1.0.0",
+  "description": "A login and dashboard system with separated frontend and backend.",
+  "main": "src/js/main.js",
+  "scripts": {
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production",
+    "test": "jest"
+  },
+  "keywords": [
+    "login",
+    "dashboard",
+    "frontend",
+    "backend"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0",
+    "jest": "^26.6.0",
+    "babel-loader": "^8.2.2",
+    "babel-core": "^7.0.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
